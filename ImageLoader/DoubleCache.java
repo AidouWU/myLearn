@@ -7,11 +7,12 @@ import android.graphics.Bitmap;
  * 缓存图片也是在内存和SD卡中都缓存一份
  */
 
-public class DoubleCache {
-    ImageCache mMemoryCache = new ImageCache();
-    DiskCache mDiskCache = new DiskCache();
+public class DoubleCache implements ImageCache{
+    ImageCache mMemoryCache = new MemoryCache();
+    ImageCache mDiskCache = new DiskCache();
 
     //先从内存缓存中获取图片，如果没有，再从SD卡中获取
+    @Override
     public Bitmap get (String url) {
         Bitmap bitmap = mMemoryCache.get(url);
         if (bitmap == null) {
@@ -21,6 +22,7 @@ public class DoubleCache {
     }
 
     //将图片缓存到内存和SD卡中
+    @Override
     public void put (String url, Bitmap bmp) {
         mMemoryCache.put(url, bmp);
         mDiskCache.put(url, bmp);

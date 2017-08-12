@@ -11,14 +11,16 @@ import java.io.IOException;
  * SD卡缓存类
  */
 
-public class DiskCache {
+public class DiskCache implements ImageCache{
     static String cacheDir = "sdcard/cache/";
     //从缓存中获取图片
+    @Override
     public Bitmap get (String url) {
         return BitmapFactory.decodeFile(cacheDir+url);
     }
 
     //将图片缓存到内存中
+    @Override
     public void put (String url, Bitmap bmp) {
         FileOutputStream fileOutputStream = null;
         try {
